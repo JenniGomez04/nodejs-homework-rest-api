@@ -1,4 +1,4 @@
-const { fs, contactsPath } = require('fs/promises');
+const { fs, contactsPath } = require('./fsPromise');
 const listContacts = require('./listContacts');
 
 const removeContact = async (id) => {
