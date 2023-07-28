@@ -60,30 +60,11 @@
     "phone": "(748) 206-2688"
   },
   {
-    "id": "b19ec770-3723-4aa0-b44a-6218132d7699",
+    "id": "b6bab0aa-8a6a-438f-bc19-43fdaaa4ce25",
     "name": {
-      "id": "8d3465ef-6173-4f0a-a542-f39ad9684375",
-      "name": "John Doe",
-      "email": "john.doe@example.com",
-      "phone": "1234567890"
-    }
-  },
-  {
-    "id": "ee3d8bd9-a652-44c5-beab-f77c0196abfc",
-    "name": {
-      "id": "1a50a5f6-7aea-4270-8aa4-315b7dd2913d",
-      "name": "John Doe",
-      "email": "john.doe@example.com",
-      "phone": "1234567890"
-    }
-  },
-  {
-    "id": "6b7aae07-97e0-4e80-99bf-9cf7c28899cf",
-    "name": {
-      "id": "608e9a67-7e09-4f3e-bc03-0138d7777bee",
-      "name": "Jane Smith",
-      "email": "jane.smith@example.com",
-      "phone": "9876543210"
+      "name": "Juan Sosa",
+      "email": "juan.perez@example.com",
+      "phone": "5551234567"
     }
   }
 ]

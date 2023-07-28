@@ -3,20 +3,20 @@ const Joi = require("joi");
 const contactSchema = Joi.object({
   name: Joi.string()
     .required()
-    .messages({ "any.required": "El campo nombre es obligatorio" }),
+    .messages({ "any.required": "The name field is required" }),
   email: Joi.string()
     .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
     .required()
     .messages({
-      "any.required": "El campo correo electrónico es obligatorio",
-      "string.email": "Ingrese un correo electrónico válido",
+      "any.required": "The email field is required",
+      "string.email": "Enter a valid email address",
     }),
   phone: Joi.string()
     .pattern(/^\d{10}$/)
     .required()
     .messages({
-      "any.required": "El campo teléfono es obligatorio",
-      "string.pattern.base": "El teléfono debe contener 10 dígitos",
+      "any.required": "The phone field is required",
+      "string.pattern.base": "The phone must contain 10 digits",
     }),
 });
 
