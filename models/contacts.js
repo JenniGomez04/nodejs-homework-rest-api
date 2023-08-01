@@ -1,14 +1,10 @@
 // const fs = require('fs/promises')
+const listContacts = require("./listContacts");
+const getContactById = require("./getContactById");
+const addContact = require("./addContact");
+const removeContact = require("./removeContact");
+const updateContact = require("./updateContact");
 
-const listContacts = async () => {}
-
-const getContactById = async (contactId) => {}
-
-const removeContact = async (contactId) => {}
-
-const addContact = async (body) => {}
-
-const updateContact = async (contactId, body) => {}
 
 module.exports = {
   listContacts,
@@ -16,4 +12,4 @@ module.exports = {
   removeContact,
   addContact,
   updateContact,
-}
+};
