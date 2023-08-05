@@ -8,14 +8,14 @@ const updateContactInfo = async (req, res) => {
     return res.status(400).json({ message: 'missing fields' });
   }
 
-  const updatedContact = await updateContact(contactId,  name, email, phone);
+  const updatedContact = await updateContact(contactId, name, email, phone);
 
   if (!updatedContact) {
     return res.status(404).json({ message: 'Not found' });
   }
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     code: 200,
     data: updatedContact,
   });

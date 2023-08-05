@@ -1,12 +1,15 @@
-const listContacts = require('./listContacts');
+const { Contact } = require("../schema/index");
 
 const getContactById = async (id) => {
-    const contacts = await listContacts();
-    const result = contacts.find(contact => contact.id === id);
-    if (!result) {
-      return null;
-    }
-    return result;
-  }
+  try {
+    const contactIds = await Contact.find({}, "id");
 
-  module.exports = getContactById;
+    const result = contactIds.find((contactId) => contactId.equals(id));
+
+    return result;
+  } catch (error) {
+    return null;
+  }
+};
+
+module.exports = getContactById;

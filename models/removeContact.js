@@ -1,15 +1,12 @@
-const { fs, contactsPath } = require('./fsPromise');
-const listContacts = require('./listContacts');
+const { Contact } = require("../schema/index");
 
 const removeContact = async (id) => {
-  const contacts = await listContacts();
-  const contactIndex = contacts.findIndex((contact) => contact.id === id);
-  if (contactIndex === -1) {
+  try {
+    const deletedContact = await Contact.findByIdAndDelete(id);
+    return deletedContact;
+  } catch (error) {
     return null;
   }
-  const [deletedContact] = contacts.splice(contactIndex, 1);
-  await fs.writeFile(contactsPath, JSON.stringify(contacts));
-  return deletedContact;
 };
 
-module.exports = removeContact;
+module.exports = { removeContact };

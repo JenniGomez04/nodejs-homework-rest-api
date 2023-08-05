@@ -1,10 +1,24 @@
-const fs = require("fs/promises");
-const { contactsPath } = require("./fsPromise");
+const { Contact } = require("../schema/index");
 
-const listContacts = async () => {
-    const data = await fs.readFile(contactsPath);
-    const contacts = JSON.parse(data);
-    return contacts;
+const listContacts = async (req, res) => {
+  try {
+    const contacts = await Contact.find({});
+    console.log(contacts);
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        result: contacts
+      }
+    });
+  } catch (error) {
+    console.error("Error al obtener los contactos:", error);
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      message: "Internal server error"
+    });
   }
+};
 
- module.exports = listContacts;
+module.exports = listContacts;

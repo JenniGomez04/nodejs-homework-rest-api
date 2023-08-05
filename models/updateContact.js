@@ -1,15 +1,21 @@
-const { fs, contactsPath } = require("./fsPromise");
-const listContacts = require("./listContacts");
+
+const { Contact } = require('../schema/index');
 
 const updateContact = async (id, name, email, phone) => {
-  const contacts = await listContacts();
-  const contactIndex = contacts.findIndex((contact) => contact.id === id);
-  if (contactIndex === -1) {
+  try {
+    const updatedContact = await Contact.findByIdAndUpdate(
+      id,
+      { name, email, phone },
+      { new: true }
+    );
+    console.log(updatedContact);
+    return updatedContact;
+  } catch (error) {
     return null;
   }
-  contacts[contactIndex] = { id, name, email, phone };
-  await fs.writeFile(contactsPath, JSON.stringify(contacts));
-  return contacts[contactIndex];
 };
 
-module.exports = updateContact;
+module.exports = { updateContact };
+
+
+

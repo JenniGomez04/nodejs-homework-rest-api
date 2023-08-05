@@ -1,13 +1,10 @@
-const { fs, contactsPath } = require("./fsPromise");
-const { v4 } = require("uuid");
-const listContacts = require("./listContacts");
+const { Contact }= require("../schema/index"); 
 
 const addContact = async (name, email, phone) => {
-  const contacts = await listContacts();
-  const newContact = { id: v4(), name, email, phone };
-  contacts.push(newContact);
-  await fs.writeFile(contactsPath, JSON.stringify(contacts));
+  const newContact = new Contact({ name, email, phone });
+  await newContact.save();
   return newContact;
-}
+};
 
 module.exports = addContact;
+

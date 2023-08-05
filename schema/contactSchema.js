@@ -1,6 +1,25 @@
+const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const contactSchema = Joi.object({
+const contactSchema = Schema({
+  name: {
+    type: String,
+    required: [true, 'Set name for contact'],
+  },
+  email: {
+    type: String,
+  },
+  phone: {
+    type: String,
+    match: /^\d{10}$/,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
+  },
+}, { versionKey: false, timestamps: true });
+
+const joicontactSchema = Joi.object({
   name: Joi.string()
     .required()
     .messages({ "any.required": "The name field is required" }),
@@ -18,6 +37,19 @@ const contactSchema = Joi.object({
       "any.required": "The phone field is required",
       "string.pattern.base": "The phone must contain 10 digits",
     }),
+  favorite: Joi.boolean().default(false),
 });
 
-module.exports = contactSchema;
+const favoriteJoiSchema = Joi.object({
+  favorite: Joi.boolean()
+    .required()
+    .messages({ "any.required": "missing  field favorite" }),
+});
+
+const Contact = model("Contact", contactSchema);
+
+module.exports = {
+  Contact,
+  joicontactSchema,
+  favoriteJoiSchema,
+};
