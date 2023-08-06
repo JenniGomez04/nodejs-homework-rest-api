@@ -1,37 +1,43 @@
-const { Contact } = require("../../schema/index");
+const { Contact } = require("../../schema");
 
-const updateFavorite = async (req, res) => {
+const updateStatusContact = async (contactId, favorite) => {
   try {
-    const { contactId } = req.params;
-    const { favorite } = req.body;
-    
-    // Utiliza Mongoose para buscar y actualizar el contacto por su _id
-    const result = await Contact.findByIdAndUpdate(contactId, { favorite }, { new: true });
+    const updatedContact = await Contact.findByIdAndUpdate(
+      contactId,
+      { favorite },
+      { new: true }
+    );
 
-    if (!result) {
-      return res.status(404).json({
-        status: "error",
-        code: 404,
-        message: `Contacto con el id ${contactId} no encontrado`,
-      });
-    }
-
-    res.json({
-      status: "success",
-      code: 200,
-      data: {
-        result,
-      },
-    });
+    return updatedContact;
   } catch (error) {
-    // Maneja cualquier error inesperado que pueda ocurrir durante el procesamiento de la solicitud
-    console.error("Error al actualizar favorito:", error);
-    return res.status(500).json({
-      status: "error",
-      code: 500,
-      message: "Error interno del servidor",
-    });
+    throw error;
   }
 };
 
-module.exports = updateFavorite;
+const updateContactFavorite = async (req, res) => {
+  const { contactId } = req.params;
+  const { favorite } = req.body;
+
+  if (favorite === undefined) {
+    return res.status(400).json({ message: "missing field favorite" });
+  }
+
+  try {
+    const updatedContact = await updateStatusContact(contactId, favorite);
+
+    if (!updatedContact) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      data: updatedContact,
+    });
+  } catch (error) {
+    console.error("Error updating contact:", error);
+    return res.status(500).json({ message: "Failed to update contact" });
+  }
+};
+
+module.exports = updateContactFavorite;

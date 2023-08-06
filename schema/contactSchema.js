@@ -17,7 +17,7 @@ const contactSchema = Schema({
     type: Boolean,
     default: false,
   },
-}, { versionKey: false, timestamps: true });
+}, { versionKey: false, timestamps: false });
 
 const joicontactSchema = Joi.object({
   name: Joi.string()

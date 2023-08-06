@@ -1,4 +1,4 @@
-const { Contact } = require("../../schema/index");;
+const { Contact } = require("../../schema");;
 
 const getContact = async (req, res) => {
   const { contactId } = req.params;
