@@ -5,20 +5,17 @@ const signUp = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Verifica si el correo ya está en uso
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ message: 'Email in use' });
     }
 
-    // Hashea la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Crea un nuevo usuario
     const newUser = await User.create({
       email,
       password: hashedPassword,
-      subscription: 'starter' // Valor predeterminado
+      subscription: 'starter' 
     });
 
     res.status(201).json({

@@ -1,14 +1,16 @@
-const {User} = require ("../../schema");
+const { User } = require("../../schema");
 
-const logout = async(req,res, next)=>{
+const logout = async (req, res, next) => {
   try {
-  const {_id} =req.user;
-  await User.findByIdAndUpdate(_id,{token:null})
+    const { _id } = req.user;
 
-  res.status(204).json();
-} catch (error) {
-  next(error);
-}
+    await User.findByIdAndUpdate(_id, { token: null });
+
+    res.status(204).json();
+  } catch (error) {
+    next(error);
+  }
 };
 
-module.exports =logout;
+module.exports = logout;
+

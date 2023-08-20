@@ -5,7 +5,7 @@ const validation = (schema) => {
     const { error } = schema.validate(req.body);
     if (error) {
       error.status = 400;
-      return next(error); // Asegúrate de devolver aquí el resultado de next()
+      return next(error);
     } else {
       next();
     }

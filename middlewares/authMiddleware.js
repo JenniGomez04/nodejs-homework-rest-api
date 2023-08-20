@@ -1,28 +1,32 @@
 const jwt = require("jsonwebtoken");
 const { Unauthorized } = require("http-errors");
-const { SECRET_KEY } = process.env;
-const User = require("../schema/user");
+const { JWT_SECRET } = process.env;
+const { User } = require("../schema");
 
 const authMiddleware = async (req, res, next) => {
-  const token = req.headers.authorization?.replace("Bearer ", "");
-  
   try {
-    if (!token) {
+    const { authorization = "" } = req.headers;
+    const [bearer, token] = authorization.split(" ");
+
+    if (bearer !== "Bearer") {
       throw new Unauthorized("Not authorized");
     }
 
-    const decodedToken = jwt.verify(token, SECRET_KEY);
-    const user = await User.findOne({ _id: decodedToken.id, token }); 
+    const decodedToken = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(decodedToken.id);
+
     if (!user || !user.token) {
       throw new Unauthorized("Not authorized");
     }
-    
+
     req.user = user;
     next();
   } catch (error) {
-    next(error); 
+    if(error.message === "Invalid sugnature"){
+      error.status = 401;
+    }
+    next(error);
   }
 };
 
 module.exports = authMiddleware;
-
