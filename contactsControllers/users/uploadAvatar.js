@@ -12,7 +12,7 @@ const updateAvatar = async (req, response, next) => {
     }
 
     const { filename } = req.file;
-    const avatarPath = path.join(__dirname, '../public/avatars', filename);
+    const avatarPath = path.join(__dirname, '../../public/avatars', filename);
     // const newFilename = 'avatar_' + userId + path.extname(filename);
 
     await Jimp.read(req.file.path)
