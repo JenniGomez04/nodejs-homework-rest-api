@@ -5,7 +5,7 @@ const Jimp = require('jimp');
 
 const updateAvatar = async (req, response, next) => {
   try {
-    const { userId } = req.user;
+    const _id = req.user._id;
 
     if (!req.file) {
       return response.status(400).json({ message: 'No file uploaded' });
@@ -27,7 +27,7 @@ const updateAvatar = async (req, response, next) => {
 
     await fs.rename(req.file.path, avatarPath);
 
-    const user = await User.findByIdAndUpdate(userId, { avatarURL: `/avatars/${filename}` }, { new: true });
+    const user = await User.findByIdAndUpdate(_id, { avatarURL: `/avatars/${filename}` }, { new: true });
 
     response.status(200).json({ avatarURL: user.avatarURL });
   } catch (error) {
@@ -36,6 +36,4 @@ const updateAvatar = async (req, response, next) => {
 };
 
 module.exports = updateAvatar;
-
-
 
