@@ -1,8 +1,22 @@
-const ctrlWrapper = require("./ctrlWrapper");
-const validation = require("./validation");
-const authMiddleware = require("./authMiddleware");
-const upload = require("./upload")
+const multer = require('multer');
+const path = require("path");
 
-module.exports = {
-    ctrlWrapper, validation, authMiddleware, upload,
-}
+const tmpDir = path.join(__dirname, "../", "tmp");
+
+const configMulter = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, tmpDir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+  limits: {
+    fileSize: 1048576
+  }
+});
+
+const upload = multer({
+  storage: configMulter
+});
+
+module.exports = upload;
