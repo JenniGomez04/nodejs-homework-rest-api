@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const { User } = require("../../schema/index");
 const gravatar = require("gravatar");
 const { v4: uuidv4 } = require("uuid");
+const { emailService }  = require("../../utils");
 
 const signUp = async (req, res, next) => {
   try {
@@ -21,6 +22,7 @@ const signUp = async (req, res, next) => {
 
     // Genera un nuevo verificationToken
     const verificationToken = uuidv4();
+    console.log("Verification email sent:", verificationToken);
 
     const newUser = await User.create({
       email,
@@ -30,8 +32,7 @@ const signUp = async (req, res, next) => {
       verificationToken,
     });
 
-    // Envía el correo electrónico de verificación
-    emailService.sendEmail(verificationToken); // Utiliza el servicio de envío de correo electrónico
+    await emailService.sendEmail(newUser.verificationToken); 
 
     res.status(201).json({
       user: {
